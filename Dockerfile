@@ -36,6 +36,9 @@ RUN chown -R www-data:www-data /var/www/html
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
+# Configure PHP-FPM (Force Port 9000)
+COPY ./zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
+
 # Copy startup script
 COPY ./docker-start.sh /usr/local/bin/start-container
 RUN chmod +x /usr/local/bin/start-container
