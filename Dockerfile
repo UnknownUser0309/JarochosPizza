@@ -24,14 +24,11 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy project files
-COPY . .
-
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set permissions
-RUN chown -R www-data:www-data storage bootstrap/cache
+# Set permissions for the whole project to avoid permission denied in Nginx/PHP
+RUN chown -R www-data:www-data /var/www/html
 
 # Configure Nginx
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
