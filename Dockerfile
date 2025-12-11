@@ -24,6 +24,9 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
+# Copy project files with correct permissions
+COPY --chown=www-data:www-data . .
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
