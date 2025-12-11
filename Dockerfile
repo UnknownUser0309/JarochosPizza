@@ -43,8 +43,8 @@ COPY ./zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
 COPY ./docker-start.sh /usr/local/bin/start-container
 RUN chmod +x /usr/local/bin/start-container
 
-# Expose port (placeholder, will be dynamic)
-EXPOSE 8080
+# Expose port (Force 8000 as requested)
+EXPOSE 8000
 
 # Start using the script
 CMD ["start-container"]

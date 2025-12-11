@@ -1,9 +1,8 @@
 #!/bin/bash
 set -e
 
-# Replace the port in nginx config
-echo "Configuring Nginx port to $PORT..."
-sed -i "s/8080/$PORT/g" /etc/nginx/conf.d/default.conf
+# Port is hardcoded to 8000 in nginx.conf per user request
+echo "Using hardcoded port 8000..."
 
 # Validating files
 echo "Checking index.php..."
