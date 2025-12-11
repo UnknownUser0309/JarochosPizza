@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-# Install system dependencies
+# Install system dependencies (including Node.js for frontend build)
 RUN apt-get update && apt-get install -y \
     nginx \
     zip unzip \
@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     pkg-config \
     libssl-dev \
+    curl \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
@@ -27,8 +30,11 @@ WORKDIR /var/www/html
 # Copy project files with correct permissions
 COPY --chown=www-data:www-data . .
 
-# Install dependencies
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
+
+# Install Frontend dependencies and Build (Vite)
+RUN npm install && npm run build
 
 # Set permissions for the whole project to avoid permission denied in Nginx/PHP
 RUN chown -R www-data:www-data /var/www/html
